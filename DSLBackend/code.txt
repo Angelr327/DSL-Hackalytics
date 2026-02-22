@@ -1,0 +1,50 @@
+import requests
+import json
+
+# --- CONFIGURATION ---
+DATABRICKS_HOST = "https://your-workspace-url.databricks.com"
+DATABRICKS_TOKEN = "dapi_your_personal_access_token"
+WAREHOUSE_ID = "your_sql_warehouse_id"
+# Fully qualified table name: catalog.schema.table
+TABLE_NAME = "main.default.silver_funding" 
+
+def fetch_databricks_data():
+    headers = {
+        "Authorization": f"Bearer {DATABRICKS_TOKEN}",
+        "Content-Type": "application/json"
+    }
+
+    # API Payload
+    payload = {
+        "warehouse_id": WAREHOUSE_ID,
+        "statement": f"SELECT * FROM {TABLE_NAME} LIMIT 100",
+        "wait_timeout": "30s", # Synchronous wait for small results
+        "on_wait_timeout": "CANCEL"
+    }
+
+    endpoint = f"{DATABRICKS_HOST}/api/2.0/sql/statements"
+
+    print(f"Fetching data from {TABLE_NAME}...")
+    response = requests.post(endpoint, headers=headers, json=payload)
+
+    if response.status_code == 200:
+        data = response.json()
+        
+        # The API returns data in 'result' -> 'data_array'
+        # We transform it into a standard list of dictionaries for your website
+        columns = [col['name'] for col in data['manifest']['schema']['columns']]
+        rows = data['result']['data_array']
+        
+        formatted_json = [dict(zip(columns, row)) for row in rows]
+
+        # Save to file
+        with open('website_data.json', 'w') as f:
+            json.dump(formatted_json, f, indent=4)
+        
+        print("Success! Data saved to website_data.json")
+    else:
+        print(f"Error: {response.status_code}")
+        print(response.text)
+
+if __name__ == "__main__":
+    fetch_databricks_data()

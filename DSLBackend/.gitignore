@@ -1,0 +1,13 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+
+# Environment variables
+.env
+
+# ngrok config (optional)
+ngrok.yml
