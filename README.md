@@ -6,7 +6,7 @@
 
 DSL helps humanitarian advocates move from fragmented crisis data to an actionable funding story. It combines humanitarian needs and funding data, highlights crises that are both severe and underfunded, and produces lightweight Crisis Alerts that can be shared even in low-bandwidth environments.
 
-![DSL landing page](DSLFrontend/public/landing-1.png)
+DevPost: https://devpost.com/software/data-saves-lives-dsl?_gl=1*u8oowv*_gcl_au*MTA3NDQ4MzgyNy4xNzg4MDE1NjQ5*_ga*MTQ5MDU5MDY3NS4xNzg4MDE1NjQ5*_ga_0YHJK3Y10M*czE3OTA2MjgyMTYkbzkkZzEkdDE3OTA2MjgzMzMkajEzJGwwJGgw
 
 ## Why we built it
 
